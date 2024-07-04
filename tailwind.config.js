@@ -2,7 +2,6 @@
 module.exports = {
   content: [
     "./App.{js,jsx,ts,tsx}",
-    "./<StepToTheLimit>/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {},
