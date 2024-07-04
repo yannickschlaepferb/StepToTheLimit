@@ -10,10 +10,10 @@ export default function StepCounter() {
     if (isRunning) {
       interval = setInterval(() => {
         setCounter((prevCounter) => prevCounter + 1);
-      }, 1000);
+      }, 500);
     }
     return () => {
-      clearInterval(interval);
+      clearInterval(interval); // Clean up the interval on component unmount or when isRunning changes
     };
   }, [isRunning]);
 
@@ -21,16 +21,26 @@ export default function StepCounter() {
     setIsRunning(true);
   };
 
+  const handleStop = () => {
+    setIsRunning(false);
+  };
+
   return (
-    <View className="flex-1 justify-center items-center bg-white">
+    <View className="flex-1 justify-center items-center w-full">
       <Text className="text-center mt-3 text-2xl text-blue-500 absolute top-10">
-        {counter}
+        Steps: {counter}
       </Text>
       <Pressable
         onPress={handleStart}
-        className="absolute top-20 p-4 bg-blue-500 rounded-lg"
+        className="p-4 px-10 mb-5 bg-blue-600 rounded-lg border"
       >
         <Text className="text-white">Start</Text>
+      </Pressable>
+      <Pressable
+        onPress={handleStop}
+        className="p-4 px-10 bg-violet-500 rounded-lg"
+      >
+        <Text className="text-white">Stop</Text>
       </Pressable>
     </View>
   );
