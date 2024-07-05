@@ -1,16 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Pressable } from 'react-native';
 import Highscore from './Highscore';
+import { registerBackgroundFetchAsync, unregisterBackgroundFetchAsync } from '../backgroundFetch';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function StepCounter() {
   const [counter, setCounter] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
+    const loadCounter = async () => {
+      const storedCounter = await AsyncStorage.getItem('counter');
+      if (storedCounter !== null) {
+        setCounter(parseInt(storedCounter, 10));
+      }
+    };
+
+    loadCounter();
+    registerBackgroundFetchAsync();
+
+    return () => {
+      unregisterBackgroundFetchAsync();
+    };
+  }, []);
+
+  useEffect(() => {
     let interval;
     if (isRunning) {
       interval = setInterval(() => {
-        setCounter((prevCounter) => prevCounter + 1);
+        setCounter((prevCounter) => {
+          const newCounter = prevCounter + 1;
+          AsyncStorage.setItem('counter', newCounter.toString());
+          return newCounter;
+        });
       }, 500);
     }
     return () => {

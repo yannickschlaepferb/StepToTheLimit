@@ -40,6 +40,7 @@ export default function Highscore({ currentSteps }) {
       Alert.alert('Error saving highscore');
     }
   };
+//Funktionen die Async involvieren habe ich mit Hilfe von ChatGPT gemacht
 
   return (
     <View className="justify-center items-center bg-violet-500 p-4 rounded-lg shadow-md">
