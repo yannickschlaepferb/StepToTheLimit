@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Alert } from 'react-native';
+import { Text, View, Alert, Vibration } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Highscore({ currentSteps }) {
@@ -16,6 +16,7 @@ export default function Highscore({ currentSteps }) {
       setHighscore(currentSteps);
       setHighscoreDate(currentDate);
       saveHighscore(currentSteps, currentDate);
+      Vibration.vibrate(); 
     }
   }, [currentSteps]);
 
@@ -40,7 +41,6 @@ export default function Highscore({ currentSteps }) {
       Alert.alert('Error saving highscore');
     }
   };
-//Funktionen die Async involvieren habe ich mit Hilfe von ChatGPT gemacht
 
   return (
     <View className="justify-center items-center bg-violet-500 p-4 rounded-lg shadow-md">
